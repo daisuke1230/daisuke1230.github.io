@@ -1,0 +1,396 @@
+:root {
+  --page-bg: #8d9b9f;
+  --panel-bg: #bfd1d7;
+  --card-bg: rgba(236, 246, 249, 0.66);
+  --card-bg-hover: rgba(255, 255, 255, 0.82);
+  --ink: #16272d;
+  --muted: #708089;
+  --shadow: 0 20px 80px rgba(35, 55, 61, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--page-bg);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(90deg, var(--page-bg) 0, var(--page-bg) calc(50% - 360px), transparent calc(50% - 360px), transparent calc(50% + 360px), var(--page-bg) calc(50% + 360px)),
+    var(--panel-bg);
+  font-family: Georgia, "Times New Roman", "Noto Serif TC", serif;
+}
+
+body.dialog-open {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.portal {
+  width: min(100%, 720px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 36px 88px;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.icon-button {
+  position: relative;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 0;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #05090a;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.icon-button::after {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  max-width: 180px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(22, 39, 45, 0.88);
+  color: #fff;
+  content: attr(data-message);
+  font-family: Arial, "Noto Sans TC", sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.icon-button[data-message]::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.icon-button:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.profile {
+  display: grid;
+  justify-items: center;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.avatar {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+}
+
+.profile h1 {
+  margin: 16px 0 4px;
+  font-size: 32px;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.profile p {
+  max-width: 440px;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.links {
+  display: grid;
+  gap: 16px;
+  width: min(100%, 584px);
+  margin: 56px auto 0;
+}
+
+.link-card {
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  align-items: center;
+  min-height: 68px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--card-bg);
+  font-size: 19px;
+  font-weight: 700;
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.link-card:hover {
+  background: var(--card-bg-hover);
+  box-shadow: 0 10px 30px rgba(50, 70, 76, 0.12);
+  transform: translateY(-2px);
+}
+
+.link-main {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  align-items: center;
+  min-height: 68px;
+  padding: 10px 0 10px 14px;
+}
+
+.link-main:focus-visible,
+.more:focus-visible,
+.icon-button:focus-visible {
+  outline: 3px solid rgba(22, 39, 45, 0.45);
+  outline-offset: -3px;
+}
+
+.link-main img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.link-main img.plurk-logo {
+  width: 38px;
+  height: 38px;
+  margin-left: 4px;
+}
+
+.link-main span {
+  justify-self: center;
+}
+
+.more {
+  display: grid;
+  width: 44px;
+  height: 100%;
+  min-height: 68px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.more:hover {
+  background: rgba(255, 255, 255, 0.32);
+  color: var(--ink);
+}
+
+.share-dialog[hidden] {
+  display: none;
+}
+
+.share-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.share-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(22, 39, 45, 0.42);
+}
+
+.share-dialog__panel {
+  position: relative;
+  width: min(100%, 420px);
+  padding: 22px;
+  border-radius: 18px;
+  background: #f7fbfc;
+  box-shadow: 0 28px 90px rgba(22, 39, 45, 0.28);
+  color: var(--ink);
+}
+
+.share-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.share-dialog__header h2 {
+  margin: 0;
+  font-family: Arial, "Noto Sans TC", sans-serif;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.share-dialog__close {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.share-dialog__close:hover {
+  background: rgba(22, 39, 45, 0.08);
+}
+
+.share-dialog__close svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.share-dialog__name {
+  margin: 24px 0 8px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.share-dialog__url {
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(191, 209, 215, 0.32);
+  color: var(--muted);
+  font-family: Arial, "Noto Sans TC", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  text-align: center;
+  user-select: all;
+}
+
+.share-dialog__copy {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  cursor: pointer;
+  font-family: Arial, "Noto Sans TC", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.share-dialog__copy:hover {
+  background: #20363e;
+}
+
+.share-dialog__status {
+  min-height: 20px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-family: Arial, "Noto Sans TC", sans-serif;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  body {
+    background: var(--panel-bg);
+  }
+
+  .portal {
+    width: 100%;
+    padding: 24px 18px 56px;
+    box-shadow: none;
+  }
+
+  .profile {
+    margin-top: 18px;
+  }
+
+  .avatar {
+    width: 86px;
+    height: 86px;
+  }
+
+  .profile h1 {
+    font-size: 30px;
+  }
+
+  .profile p {
+    max-width: 340px;
+    font-size: 16px;
+  }
+
+  .links {
+    gap: 14px;
+    margin-top: 52px;
+  }
+
+  .link-card {
+    min-height: 64px;
+    grid-template-columns: 1fr 42px;
+    font-size: 18px;
+  }
+
+  .link-main {
+    grid-template-columns: 50px 1fr;
+    min-height: 64px;
+  }
+
+  .more {
+    width: 42px;
+    min-height: 64px;
+  }
+
+  .share-dialog {
+    align-items: end;
+    padding: 12px;
+  }
+
+  .share-dialog__panel {
+    border-radius: 18px;
+  }
+}
