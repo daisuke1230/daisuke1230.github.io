@@ -191,6 +191,13 @@ button {
   margin-left: 4px;
 }
 
+.link-main img.telegram-logo,
+.link-main img.discord-logo {
+  width: 40px;
+  height: 40px;
+  margin-left: 3px;
+}
+
 .link-main span {
   justify-self: center;
 }
@@ -214,6 +221,38 @@ button {
 .more:hover {
   background: rgba(255, 255, 255, 0.32);
   color: var(--ink);
+}
+
+.support {
+  width: min(100%, 584px);
+  margin: 26px auto 0;
+}
+
+.support-card {
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--card-bg);
+  box-shadow: 0 10px 30px rgba(50, 70, 76, 0.1);
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.support-card:hover {
+  box-shadow: 0 14px 34px rgba(50, 70, 76, 0.16);
+  filter: saturate(1.04);
+  transform: translateY(-2px);
+}
+
+.support-card:focus-visible {
+  outline: 3px solid rgba(22, 39, 45, 0.45);
+  outline-offset: 3px;
+}
+
+.support-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 18 / 5;
+  object-fit: cover;
 }
 
 .share-dialog[hidden] {
@@ -373,6 +412,18 @@ button {
     min-height: 64px;
     grid-template-columns: 1fr 42px;
     font-size: 18px;
+  }
+
+  .support {
+    margin-top: 22px;
+  }
+
+  .support-card {
+    border-radius: 14px;
+  }
+
+  .support-card img {
+    aspect-ratio: 2.65 / 1;
   }
 
   .link-main {
